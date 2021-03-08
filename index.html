@@ -17,7 +17,16 @@
           <h1 class="display-4">_ui | A lightweight DOM interface</h1>
           <p class="lead">_ui (aka 'minUI') is a simple and straightforward library for interfacing with the DOM.</p>
           <hr class="my-4">
-          <p>It uses ES6+ JavaScript with no dependencies, and offers an API to make messy DOM manipulation code much more readable.</p>
+          <p>It uses ES6+ JavaScript with no dependencies, and offers an API to make messy DOM manipulation code much more readable. It's currently an early alpha version, and I would appreciate any feedback/bugs!</p>
+          <div class="input-group mb-3">
+            <input id="cdn" type="text" class="form-control" value="&lt;script src='https://cdn.jsdelivr.net/gh/grahhhhhhham/minui@0.0.8/dist/core.min.js'>&lt;/script>" disabled>
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button" id="copyCdn">Copy</button>
+            </div>
+          </div>
+          <div class="input-group justify-content-center">
+            <a target="_blank" href="https://github.com/grahhhhhhham/minui" class="btn btn-secondary">View GitHub</a>
+          </div>
         </div>
       </div>
     </div>
@@ -66,7 +75,7 @@ let alert = {
   classes: ['alert', 'alert-primary'],
   attr: {
     role: 'alert',
-    innerText: 'Hover over me!',
+    innerText: 'Hover over me! Then click me!',
     blueprint: 'alert',
   },
   states: {
@@ -92,21 +101,11 @@ _ui.loaded(() => {
 
   let alerts = _ui.get({class: 'alert'});
 
-  alerts.forEach((alert, idx) => {
-    switch (idx) {
-      case 0:
-        _ui.mouseenter(alert, () => _ui.state(alert, 'danger'));
-        break;
-      case 1:
-        _ui.mouseenter(alert, () => _ui.state(alert, 'info'));
-        break;
-      case 2:
-        _ui.mouseenter(alert, () => _ui.state(alert, 'success'));
-        break;
-    }
+  _ui.mouseenter(alerts[0], () => _ui.state(alerts[0], 'danger'));
+  _ui.mouseenter(alerts[1], () => _ui.state(alerts[1], 'info'));
+  _ui.mouseenter(alerts[2], () => _ui.state(alerts[2], 'success'));
 
-    _ui.mouseleave(alert, () => _ui.state(alert, 'primary'));
-  });
+  _ui.click(revertToPrimary, {query: '.alert'});
 });
               </pre>
             </div>

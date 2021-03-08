@@ -10,3 +10,7 @@ html, body {
 .card-text pre {
   width: inherit;
 }
+
+.jumbotron .input-group {
+  padding: 0 15vh;
+}
