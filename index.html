@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>minUI | A lightweight DOM interface</title>
+  <link rel="shortcut icon" href="./css/favicon.ico" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+  <div class="container min-100">
+    <div class="row align-items-start mt-5">
+      <div class="col">
+        <div class="jumbotron">
+          <h1 class="display-4">_ui | A lightweight DOM interface</h1>
+          <p class="lead">_ui (aka 'minUI') is a simple and straightforward library for interfacing with the DOM.</p>
+          <hr class="my-4">
+          <p>It uses ES6+ JavaScript with no dependencies, and offers an API to make messy DOM manipulation code much more readable.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-start mt-2">
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header">
+            Selecting Elements
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">_ui has a single, flexible DOM selection method.</h5>
+            <p class="card-text">
+              Retrieving single elements or a collection is as simple as choosing the right option:<br>
+              <pre>let buttons = _ui.get({query: 'btn.btn-primary'});<br>let formBtn = _ui.get({id: 'formBtn'});<br>let cards = _ui.get({class: 'card'});</pre>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header">
+            Straight-forward Events
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">_ui lets you easily attach events across the DOM.</h5>
+            <p class="card-text">
+              Single element:<br>
+              <pre>_ui.click({id: 'formBtn'}, () => console.log('clicked!'));</pre>
+              Event bubbling:<br>
+              <pre class="mt-2">_ui.mouseover(someFn, {query: 'alert.mouseover-this'});</pre>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header">_ui implements it's own component-like system called blueprints</div>
+          <div class="card-body">
+            <div class="card-text">
+              Creating a blueprint is straightforward:
+              <pre class="mt-3">
+let alert = {
+  tag: 'div',
+  classes: ['alert', 'alert-primary'],
+  attr: {
+    role: 'alert',
+    innerText: 'Hover over me!',
+    blueprint: 'alert',
+  },
+  states: {
+    primary: ['alert-primary'],
+    danger: ['alert-danger'],
+    success: ['alert-success'],
+    info: ['alert-info'],
+  },
+}
+              </pre>
+              Then pass the object to the factory (_ui.make):
+              <pre class="mt-3">
+function insertAlerts(parent) {
+  for (let i = 0; i &lt; 3; i++) {
+    parent.appendChild(_ui.make(alert));
+  }
+}
+              </pre>
+              And do something with them!
+              <pre class="mt-3">
+_ui.loaded(() => {
+  insertAlerts(_ui.get({id: 'demo'}));
+
+  let alerts = _ui.get({class: 'alert'});
+
+  alerts.forEach((alert, idx) => {
+    switch (idx) {
+      case 0:
+        _ui.mouseenter(alert, () => _ui.state(alert, 'danger'));
+        break;
+      case 1:
+        _ui.mouseenter(alert, () => _ui.state(alert, 'info'));
+        break;
+      case 2:
+        _ui.mouseenter(alert, () => _ui.state(alert, 'success'));
+        break;
+    }
+
+    _ui.mouseleave(alert, () => _ui.state(alert, 'primary'));
+  });
+});
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header">Demo of the code to the left</div>
+          <div class="card-body" id="demo">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/gh/grahhhhhhham/minui@0.0.8/dist/core.min.js"></script>
+  <script src="./js/blueprints/alert.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+</html>
