@@ -3,7 +3,7 @@ let alert = {
   classes: ['alert', 'alert-primary'],
   attr: {
     role: 'alert',
-    innerText: 'Hover over me!',
+    innerText: 'Hover over me! Then click me!',
     blueprint: 'alert',
   },
   states: {
